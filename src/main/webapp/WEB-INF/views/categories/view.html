@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>View Category</title>
+</head>
+<body style="text-align: center">
+<h3>View Notes from Category: "<span th:text="${category.getName()}" style="color: red;"></span>"</h3>
+<p>
+    <a th:href="@{/categories}">Back to Categories list</a>
+</p>
+<th:block th:if="${message}">
+    <p th:text="${message}"></p>
+</th:block>
+<table align="center" border="1px">
+    <thead>
+    <tr>
+        <th>Title</th>
+        <th>Content</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="note: ${notes}">
+        <td th:text="${note.getTitle()}"></td>
+        <td th:text="${note.getContent()}"></td>
+    </tr>
+    </tbody>
+</table>
+<footer></footer>
+</body>
+</html>

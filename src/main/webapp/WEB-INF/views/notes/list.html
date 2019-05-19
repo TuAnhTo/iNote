@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>iNotes Application</title>
+    <style>
+        td{
+            padding: 5px;
+        }
+    </style>
+</head>
+<script>
+    function filterByCategory() {
+        document.getElementById("form").submit();
+    }
+</script>
+<body style="text-align: center;">
+    <h1>iNotes Application</h1>
+    <div style="margin: 0 auto; display: inline-block;">
+        <form id="form" style="float: left; margin-right: 5px;">
+            <select name="categories" id="categories" onchange="filterByCategory()">
+                <option value="" >All notes</option>
+                <option th:each="category: ${categories}" th:value="${category.getId()}" th:selected="(${category_id} == ${category.getId()})"><span th:text="${category.getName()}"></span></option>
+            </select>
+        </form>
+        <form style="float: left">
+            <input name="findByTitle" type="text" placeholder="Title"/>
+            <input type="submit" value="Search"/>
+        </form>
+    </div>
+    <p></p>
+    <button><a th:href="@{/category-create}">Create new category</a></button>
+    <button><a th:href="@{/create-note}">Create new note</a></button>
+    <p></p>
+    <th:block th:if="${message}">
+        <p th:text="${message}"></p>
+    </th:block>
+    <form>
+        <table border="1" align ="center">
+            <tr>
+                <td style="width: 30px">STT</td>
+                <td style="width: 200px">Title</td>
+                <td style="width: 75px"><a th:href="@{/categories}">Categories</a></td>
+                <td colspan="2">Options</td>
+            </tr>
+            <tr th:each="note, stt: ${notes}">
+                <td th:text="${stt.count}"></td>
+                <td style="text-align: left"><a th:href="@{/note-view/__${note.id}__}"><span th:text="${note.getTitle()}"></span></a></td>
+                <td th:text="${note.getCategory().getName()}"></td>
+                <td style="width: 60px"><a th:href="@{/note-edit/__${note.id}__}">Edit</a></td>
+                <td style="width: 60px"><a th:href="@{/note-delete/__${note.id}__}" onclick="return confirm('Are you sure to delete this note???')">Delete</a></td>
+            </tr>
+        </table>
+        <div style="margin-top: 20px">
+            <a th:href="@{'/notes'(page=${notes.number - 1})}" th:if="${notes.hasPrevious()}">Previous</a>
+            <span th:text="${notes.number + 1}"></span>/<span th:text="${notes.totalPages}"></span>
+            <a th:href="@{'/notes'(page=${notes.number + 1})}" th:if="${notes.hasNext()}">Next</a>
+        </div>
+    </form>
+</body>
+</html>

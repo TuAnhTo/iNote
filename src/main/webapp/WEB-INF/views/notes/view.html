@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>View Note</title>
+</head>
+<body style="text-align: center;">
+<h3>Note Details</h3>
+<p>
+    <a th:href="@{/notes}">Back to notes list</a>
+</p>
+<table align="center" th:object="${note}">
+    <tr>
+        <td style="text-align: left">Category: </td>
+        <td style="float: left;" th:text="${note.getCategory().getName()}"></td>
+    </tr>
+    <tr>
+        <td style="text-align: left">Title: </td>
+        <td th:text="${note.getTitle()}"></td>
+    </tr>
+    <tr>
+        <td style="text-align: left">Content: </td>
+        <td th:text="${note.getContent()}" style="text-align: left"></td>
+    </tr>
+</table>
+</body>
+</html>
